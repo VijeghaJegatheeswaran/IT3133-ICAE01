@@ -1,20 +1,34 @@
-import '../assets/CSS/layout.css';
-export default function Product(){
-    
-    return(
-        <div className="grid-item">
+import React from "react";
 
-            <div class="card">
-                <img  />
-                <div class="card-body">
-                    <h5 class="card-title">Price:</h5>
-                    <div class="quantity-container">
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" name="quantity" />
-                    </div>
-                    <button class="card-button">Add to Cart</button>
-                </div>
-            </div>
-        </div>
-    );
+export default function Cart({ cartItems }) {
+  const calculateTotal = () =>
+    cartItems.reduce((total, item) => total + item.price * item.qty, 0);
+
+  return (
+    <div className="table-container">
+      <h4 className="card-title">Cart</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>QTY</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cartItems.map(item => (
+            <tr key={item.id}>
+              <td>{item.name}</td>
+              <td>{item.qty}</td>
+              <td>${item.price * item.qty}</td>
+            </tr>
+          ))}
+          <tr>
+            <td>Grand Total:</td>
+            <td colSpan={2}>${calculateTotal()}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
 }
